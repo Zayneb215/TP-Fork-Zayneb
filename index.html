@@ -2,10 +2,8 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Équipe DSI21 — TP Fork</title>
-
+    <title>Équipe DSI21 — TP Fork (Final)</title>
     <style>
-      /* --- BASE STYLES --- */
       * {
         margin: 0;
         padding: 0;
@@ -14,29 +12,26 @@
 
       body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(120deg, #89f7fe, #66a6ff);
-        background-size: 200% 200%;
-        animation: gradientMove 12s ease infinite;
         color: #333;
         overflow-x: hidden;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        transition: background 1s, color 0.5s;
       }
 
-      @keyframes gradientMove {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
+      #bgCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -2;
       }
 
-      /* --- CONTAINER --- */
+      body.dark {
+        background: linear-gradient(120deg, #141e30, #243b55);
+        color: #eee;
+      }
+
       .container {
         flex: 1;
         max-width: 1100px;
@@ -61,7 +56,6 @@
         }
       }
 
-      /* --- TITRE --- */
       h1 {
         font-size: 3rem;
         color: #0078b7;
@@ -83,22 +77,10 @@
         font-size: 1.2rem;
         color: #555;
         margin-bottom: 30px;
-        animation: fadeIn 2s ease;
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-
-      /* --- LISTE MEMBRES --- */
       ul.membres {
         list-style: none;
-        padding: 0;
         margin: 30px auto 40px;
         width: 70%;
         display: flex;
@@ -112,7 +94,7 @@
         padding: 10px 20px;
         border-radius: 30px;
         font-weight: 500;
-        transition: all 0.3s;
+        transition: 0.3s;
       }
 
       ul.membres li:hover {
@@ -120,7 +102,6 @@
         transform: translateY(-3px);
       }
 
-      /* --- GRILLE DES MEMBRES --- */
       .grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -145,21 +126,8 @@
         color: #fff;
         border-radius: 20px;
         padding: 25px;
-        position: relative;
-        overflow: hidden;
-        transition: all 0.4s ease;
+        transition: 0.4s;
         box-shadow: 0 8px 20px rgba(0, 120, 183, 0.3);
-        animation: floatUp 5s ease-in-out infinite;
-      }
-
-      @keyframes floatUp {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
       }
 
       .member:hover {
@@ -174,7 +142,7 @@
         object-fit: cover;
         border: 4px solid #fff;
         margin-bottom: 10px;
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        transition: 0.4s;
       }
 
       .member:hover img {
@@ -182,20 +150,13 @@
         box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
       }
 
-      .member p {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 5px 0 0;
-      }
-
-      /* --- SECTION PROJET --- */
       .project-section {
         margin-top: 60px;
-        text-align: left;
         background: #f8fbff;
         padding: 30px;
         border-radius: 20px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: left;
       }
 
       .project-section h2 {
@@ -204,105 +165,60 @@
         text-align: center;
       }
 
-      .project-section p {
-        line-height: 1.7;
-        color: #444;
-        font-size: 1rem;
-      }
-
       .project-section ul {
         margin-top: 10px;
         margin-left: 40px;
-        color: #333;
       }
 
-      .project-section li {
-        margin-bottom: 8px;
-      }
-
-      /* --- BOUTON --- */
       button {
-        margin-top: 50px;
-        padding: 14px 35px;
-        font-size: 1.1rem;
+        margin: 20px 10px 0;
+        padding: 12px 28px;
+        font-size: 1rem;
         background: linear-gradient(135deg, #0078b7, #00a8ff);
         color: #fff;
         border: none;
         border-radius: 50px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: 0.3s;
         box-shadow: 0 6px 12px rgba(0, 120, 183, 0.4);
       }
 
       button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 10px 20px rgba(0, 120, 183, 0.5);
-        background: linear-gradient(135deg, #00a8ff, #0078b7);
+        transform: scale(1.08);
+        box-shadow: 0 10px 18px rgba(0, 120, 183, 0.5);
       }
 
-      /* --- FOOTER --- */
+      #gameBox {
+        width: 60px;
+        height: 60px;
+        background: #00a8ff;
+        border-radius: 10px;
+        color: #fff;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
       footer {
         background: linear-gradient(135deg, #0078b7, #00a8ff);
         color: white;
         text-align: center;
-        padding: 30px 20px;
-        position: relative;
+        padding: 25px 20px;
         box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15);
-      }
-
-      footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60%;
-        height: 3px;
-        background: white;
-        border-radius: 2px;
-        animation: glowLine 3s infinite alternate;
-      }
-
-      @keyframes glowLine {
-        from {
-          box-shadow: 0 0 5px #fff;
-        }
-        to {
-          box-shadow: 0 0 20px #fff;
-        }
-      }
-
-      .footer-content {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      .footer-content p {
-        margin-top: 15px;
-        font-size: 0.95rem;
-        opacity: 0.9;
-      }
-
-      .socials {
-        margin-top: 10px;
-      }
-
-      .socials a {
-        color: white;
-        text-decoration: none;
-        font-size: 1.4rem;
-        margin: 0 10px;
-        transition: all 0.3s ease;
-      }
-
-      .socials a:hover {
-        color: #ffd166;
-        transform: scale(1.2);
       }
     </style>
   </head>
 
   <body>
+    <canvas id="bgCanvas"></canvas>
+
     <div class="container">
       <h1>Équipe DSI21</h1>
       <p class="subtitle">
@@ -323,27 +239,22 @@
           <img src="WhatsApp Image 2025-11-12 at 03.01.33.jpeg" alt="Mahmoud" />
           <p>Mahmoud Saadaoui</p>
         </div>
-
         <div class="member">
           <img src="WhatsApp Image 2025-11-12 at 02.55.12.jpeg" alt="Eya" />
           <p>Eya Ben Belgacem</p>
         </div>
-
         <div class="member">
           <img src="WhatsApp Image 2025-11-12 at 02.54.42.jpeg" alt="Manar" />
           <p>Manar Dgachi</p>
         </div>
-
         <div class="member">
           <img src="WhatsApp Image 2025-11-12 at 03.06.44.jpeg" alt="Islem" />
           <p>Islem Dridi</p>
         </div>
-
         <div class="member">
           <img src="16e5ece4-0457-47e2-a747-0b636786d066.jpeg" alt="Zayneb" />
           <p>Zayneb Bellil</p>
         </div>
-
         <div class="member">
           <img src="WhatsApp Image 2025-11-12 at 03.04.46.jpeg" alt="Issrae" />
           <p>Issrae Werghemmi</p>
@@ -372,29 +283,132 @@
       </div>
 
       <button onclick="afficherMessage()">Joignez notre aventure!💙</button>
+
+      <!-- 🎮 Buttons -->
+      <div>
+        <button onclick="afficherMessage()">💬 Message</button>
+        <button onclick="toggleTheme()">🌙 Mode</button>
+        <button onclick="startGame()">🎮 Mini jeu</button>
+        <button onclick="stars()">✨ Effet magique</button>
+      </div>
     </div>
+
+    <div id="gameBox" onclick="clickBox()">0</div>
 
     <footer>
       <div class="footer-content">
         <div class="socials">
-          <a href="#"><i>🌐</i></a>
-          <a href="#"><i>💻</i></a>
-          <a href="#"><i>📸</i></a>
+          <a href="#">🌐</a>
+          <a href="#">💻</a>
+          <a href="#">📸</a>
         </div>
-        <p>
-          Projet réalisé avec ❤️ par <b>Équipe DSI21</b> — Année Universitaire
-          2025/2026
-        </p>
-        <p>&copy; Tous droits réservés | DSI21 - ISET TOZEUR</p>
+        <p>Projet réalisé avec ❤️ par <b>Équipe DSI21</b> — Année Universitaire 2025/2026</p>
+        <p>&copy; Tous droits réservés | DSI21 - ISET Tozeur</p>
       </div>
     </footer>
 
     <script>
-      function afficherMessage() {
-        alert(
-          'Merci d’avoir visité la page de notre équipe DSI21 🌟\nCollaboration = Réussite !'
-        )
+      // 🌙 Mode sombre
+      function toggleTheme() {
+        document.body.classList.toggle('dark')
       }
+
+      // 💬 Message
+      function afficherMessage() {
+        alert('Bienvenue sur la page DSI21 🌟\nCollaboration = Réussite !')
+      }
+
+      // 🎮 Mini jeu
+      let score = 0,
+        active = false
+      const box = document.getElementById('gameBox')
+
+      function startGame() {
+        if (active) return
+        score = 0
+        active = true
+        box.style.display = 'flex'
+        box.innerText = score
+        moveBox()
+        alert('Clique 10 fois sur le carré bleu pour gagner 🎯')
+      }
+
+      function clickBox() {
+        if (!active) return
+        score++
+        box.innerText = score
+        moveBox()
+        if (score >= 10) {
+          alert('Bravo 🎉 Score: ' + score)
+          box.style.display = 'none'
+          active = false
+        }
+      }
+
+      function moveBox() {
+        const padding = 80
+        const maxX = window.innerWidth - padding
+        const maxY = window.innerHeight - padding
+        box.style.left = Math.random() * maxX + 'px'
+        box.style.top = Math.random() * maxY + 'px'
+      }
+
+      // ✨ Effet magique (étoiles)
+      function stars() {
+        for (let i = 0; i < 12; i++) {
+          const s = document.createElement('div')
+          s.innerText = '⭐'
+          s.style.position = 'absolute'
+          s.style.left = Math.random() * window.innerWidth + 'px'
+          s.style.top = '100%'
+          s.style.fontSize = 14 + Math.random() * 18 + 'px'
+          s.style.zIndex = 50
+          document.body.appendChild(s)
+          let topPerc = 100
+          const anim = setInterval(() => {
+            topPerc -= 3 + Math.random() * 3
+            s.style.top = topPerc + '%'
+            if (topPerc < -10) {
+              clearInterval(anim)
+              s.remove()
+            }
+          }, 30 + Math.random() * 40)
+        }
+      }
+
+      // 🎨 Arrière-plan animé
+      const canvas = document.getElementById('bgCanvas')
+      const ctx = canvas.getContext('2d')
+      function resizeCanvas() {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+      }
+      resizeCanvas()
+      window.addEventListener('resize', resizeCanvas)
+
+      const bubbles = Array.from({ length: 70 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 3 + 1,
+        dy: Math.random() * 0.8 + 0.3,
+      }))
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        for (let b of bubbles) {
+          ctx.beginPath()
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2)
+          ctx.fillStyle = 'rgba(0,150,255,0.25)'
+          ctx.fill()
+          b.y -= b.dy
+          if (b.y < -10) {
+            b.y = canvas.height + 10
+            b.x = Math.random() * canvas.width
+          }
+        }
+        requestAnimationFrame(animate)
+      }
+      animate()
     </script>
   </body>
 </html>
